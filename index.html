@@ -222,6 +222,46 @@
         color: var(--cream-dim);
       }
 
+      .download-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .download-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        min-width: 220px;
+        padding: 18px 28px;
+        border-radius: 4px 4px 10px 10px;
+        box-shadow: var(--shadow-note);
+        text-decoration: none;
+        font-family: var(--font-body);
+        transition: transform 0.15s ease;
+      }
+      .download-btn:hover {
+        transform: translateY(-3px);
+      }
+      .download-btn .dl-title {
+        font-family: var(--font-hand);
+        font-size: 1.3rem;
+        color: var(--ink);
+      }
+      .download-btn .dl-sub {
+        font-size: 0.85rem;
+        color: #4b463b;
+      }
+      .download-btn.primary {
+        background: var(--yellow);
+      }
+      .download-btn.secondary {
+        background: var(--cream);
+      }
+
       .stack {
         position: relative;
         width: 320px;
@@ -421,7 +461,6 @@
           grid-template-columns: 1fr;
         }
       }
-
       .mode-cards {
         display: flex;
         flex-direction: column;
@@ -466,25 +505,6 @@
         border-color: var(--thread);
         transform: translateX(4px);
       }
-      .mode-card:nth-child(1) {
-        transform: rotate(-1deg);
-      }
-      .mode-card:nth-child(2) {
-        transform: rotate(0.8deg);
-      }
-      .mode-card:nth-child(3) {
-        transform: rotate(-0.6deg);
-      }
-      .mode-card[aria-pressed="true"]:nth-child(1) {
-        transform: rotate(-1deg) translateX(4px);
-      }
-      .mode-card[aria-pressed="true"]:nth-child(2) {
-        transform: rotate(0.8deg) translateX(4px);
-      }
-      .mode-card[aria-pressed="true"]:nth-child(3) {
-        transform: rotate(-0.6deg) translateX(4px);
-      }
-
       .demo-screen {
         background: var(--bg-deep);
         border-radius: 10px;
@@ -493,74 +513,121 @@
       }
       .demo-title {
         font-size: 0.78rem;
-        text-transform: none;
         color: var(--muted);
         margin-bottom: 12px;
-        letter-spacing: 0.2px;
       }
-      .layer-stack {
+      .zorder-visual {
         position: relative;
-        height: 230px;
+        height: 220px;
         border-radius: 8px;
-        background:
-          linear-gradient(
-            to bottom,
-            transparent 0%,
-            transparent 33.3%,
-            rgba(255, 255, 255, 0.05) 33.3%,
-            rgba(255, 255, 255, 0.05) 33.6%,
-            transparent 33.6%,
-            transparent 66.6%,
-            rgba(255, 255, 255, 0.05) 66.6%,
-            rgba(255, 255, 255, 0.05) 66.9%,
-            transparent 66.9%
-          ),
-          #16201c;
         overflow: hidden;
+        background: #e3ded0;
       }
-      .layer-label {
+      .zorder-visual .mini-tag {
         position: absolute;
-        left: 10px;
+        top: 10px;
+        left: 12px;
         font-size: 0.72rem;
-        color: var(--muted);
+        font-weight: 600;
+        color: #7a7568;
+        z-index: 5;
       }
-      .layer-label.top {
-        top: 8px;
-      }
-      .layer-label.mid {
-        top: 85px;
-      }
-      .layer-label.bot {
-        top: 162px;
-      }
-      .desktop-icon {
+      .zorder-visual .icon-row {
         position: absolute;
-        width: 22px;
-        height: 22px;
-        bottom: 14px;
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        display: flex;
+        gap: 8px;
+        z-index: 5;
+      }
+      .zorder-visual .icon-row span {
+        width: 18px;
+        height: 18px;
         border-radius: 4px;
-        background: rgba(255, 255, 255, 0.18);
+        background: rgba(0, 0, 0, 0.18);
       }
-      .demo-note {
+      .zorder-visual .win {
         position: absolute;
-        width: 74px;
-        height: 60px;
-        background: var(--yellow);
+        width: 96px;
+        height: 68px;
+        border-radius: 6px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+        transition:
+          top 0.35s ease,
+          left 0.35s ease,
+          z-index 0s;
+      }
+      .zorder-visual .win.blue {
+        background: var(--blue);
+      }
+      .zorder-visual .win.green {
+        background: var(--green);
+      }
+      .zorder-visual .demo-mini-note {
+        position: absolute;
+        width: 90px;
+        height: 72px;
         border-radius: 4px 4px 8px 8px;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+        background: var(--yellow);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
         left: 50%;
         transform: translateX(-50%);
         transition:
-          top 0.5s cubic-bezier(0.4, 1.4, 0.4, 1),
-          box-shadow 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.65rem;
-        color: var(--ink);
-        text-align: center;
-        padding: 4px;
+          top 0.35s ease,
+          box-shadow 0.3s ease,
+          z-index 0s;
       }
+
+      /* On desktop: green above-left and blue above-right of the yellow note */
+      .zorder-visual.desktop .demo-mini-note {
+        top: 76px;
+        z-index: 1;
+      }
+      .zorder-visual.desktop .win.green {
+        top: 26px;
+        left: calc(50% - 92px);
+        z-index: 3;
+      }
+      .zorder-visual.desktop .win.blue {
+        top: 26px;
+        left: calc(50% + 20px);
+        z-index: 2;
+      }
+
+      /* Normal: green behind, blue partly covering the yellow note */
+      .zorder-visual.normal .demo-mini-note {
+        top: 56px;
+        z-index: 2;
+      }
+      .zorder-visual.normal .win.green {
+        top: 84px;
+        left: calc(50% - 92px);
+        z-index: 1;
+      }
+      .zorder-visual.normal .win.blue {
+        top: 22px;
+        left: calc(50% + 20px);
+        z-index: 3;
+      }
+
+      /* Always on top: yellow note above both windows */
+      .zorder-visual.top .demo-mini-note {
+        top: 20px;
+        z-index: 3;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+      }
+      .zorder-visual.top .win.green {
+        top: 82px;
+        left: calc(50% - 92px);
+        z-index: 1;
+      }
+      .zorder-visual.top .win.blue {
+        top: 60px;
+        left: calc(50% + 20px);
+        z-index: 2;
+      }
+
       .demo-caption {
         margin-top: 14px;
         font-size: 0.88rem;
@@ -1017,6 +1084,7 @@
           Stikly
         </div>
         <nav class="topnav" aria-label="Sections">
+          <a href="#download">Download</a>
           <a href="#what-is-it">What is it?</a>
           <a href="#features">Features</a>
           <a href="#layers">Layers</a>
@@ -1057,6 +1125,27 @@
       </div>
       <p class="stack-hint">drag the notes</p>
     </header>
+
+    <section id="download">
+      <div class="section-head">
+        <h2>Download Stikly</h2>
+        <p>Free, no account needed. Pick the version that suits you.</p>
+      </div>
+      <div class="download-buttons">
+        <a
+          href="Stikly%20Setup%201.0.5.exe"
+          class="download-btn primary"
+          download
+        >
+          <span class="dl-title">Installer</span>
+          <span class="dl-sub">Stikly Setup 1.0.5.exe</span>
+        </a>
+        <a href="Stikly%201.0.5.exe" class="download-btn secondary" download>
+          <span class="dl-title">Portable</span>
+          <span class="dl-sub">Stikly 1.0.5.exe — no install needed</span>
+        </a>
+      </div>
+    </section>
 
     <main>
       <section id="#what-is-it">
@@ -1130,13 +1219,17 @@
             The three-dot menu hides Stikly's most particular trick: choosing
             which layer of your desktop each note lives in. Try it below.
           </p>
+          <p>
+            In each example, the yellow note is your Stikly note — the other
+            colors represent regular windows open on your desktop.
+          </p>
         </div>
 
         <div class="modes-layout">
           <div
             class="mode-cards"
             role="group"
-            aria-label="Elegir modo de la nota de ejemplo"
+            aria-label="Choose the sample note's mode"
           >
             <button
               class="mode-card"
@@ -1175,24 +1268,22 @@
               <p>Floats above any other window, so you never miss it.</p>
             </button>
           </div>
-
           <div>
             <div class="demo-screen">
               <div class="demo-title">desktop simulation</div>
-              <div class="layer-stack" id="layerStack">
-                <span class="layer-label top">always on top</span>
-                <span class="layer-label mid">normal windows</span>
-                <span class="layer-label bot">desktop icons</span>
-                <div class="desktop-icon" style="left: 14px"></div>
-                <div class="desktop-icon" style="left: 44px"></div>
-                <div class="desktop-icon" style="left: 74px"></div>
-                <div class="desktop-icon" style="right: 14px"></div>
-                <div class="demo-note" id="demoNote">note</div>
+              <div class="zorder-visual normal" id="zorderVisual">
+                <span class="mini-tag" id="zorderTag">normal window</span>
+                <div class="icon-row">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="win green" id="winGreen"></div>
+                <div class="win blue" id="winBlue"></div>
+                <div class="demo-mini-note" id="demoMiniNote"></div>
               </div>
             </div>
             <p class="demo-caption" id="demoCaption">
-              A regular window: it can be covered by other applications and
-              appears in the Alt+Tab.
+              A regular window: other apps can cover it and it appears in
+              Alt+Tab.
             </p>
           </div>
         </div>
@@ -1258,7 +1349,7 @@
                   id="liveMenuBtn"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  title="Opciones"
+                  title="Options"
                 >
                   ⋮
                 </button>
@@ -1269,31 +1360,31 @@
                       type="button"
                       class="c yellow"
                       data-color="#fff59d"
-                      aria-label="Amarillo"
+                      aria-label="Yellow"
                     ></button>
                     <button
                       type="button"
                       class="c pink"
                       data-color="#f8bbd0"
-                      aria-label="Rosa"
+                      aria-label="Pink"
                     ></button>
                     <button
                       type="button"
                       class="c green"
                       data-color="#c8e6c9"
-                      aria-label="Verde"
+                      aria-label="Green"
                     ></button>
                     <button
                       type="button"
                       class="c blue"
                       data-color="#bbdefb"
-                      aria-label="Azul"
+                      aria-label="Blue"
                     ></button>
                     <button
                       type="button"
                       class="c gear"
                       id="liveGearBtn"
-                      aria-label="Color personalizado"
+                      aria-label="Custom color"
                     >
                       <svg
                         viewBox="0 0 3000 3000"
@@ -1601,16 +1692,13 @@
 
       (function () {
         const buttons = document.querySelectorAll(".mode-card");
-        const demoNote = document.getElementById("demoNote");
+        const visual = document.getElementById("zorderVisual");
+        const tag = document.getElementById("zorderTag");
         const caption = document.getElementById("demoCaption");
-        const positions = {
-          desktop: {
-            top: "176px",
-            z: 0,
-            text: "anclada al escritorio\n(detrás de los iconos)",
-          },
-          normal: { top: "95px", z: 5, text: "ventana normal" },
-          top: { top: "14px", z: 9, text: "siempre encima" },
+        const tags = {
+          desktop: "behind desktop windows",
+          normal: "normal window",
+          top: "always visible",
         };
         const captions = {
           desktop:
@@ -1619,17 +1707,14 @@
             "In Normal mode it's a regular window: it can be covered by other applications and appears in the Alt+Tab.",
           top: "In Always on Top mode the note floats above everything else, so you never miss it.",
         };
-
         function setMode(mode) {
           buttons.forEach((b) =>
             b.setAttribute("aria-pressed", String(b.dataset.mode === mode)),
           );
-          const pos = positions[mode];
-          demoNote.style.top = pos.top;
-          demoNote.style.zIndex = pos.z;
+          visual.className = "zorder-visual " + mode;
+          tag.textContent = tags[mode];
           caption.textContent = captions[mode];
         }
-
         buttons.forEach((b) =>
           b.addEventListener("click", () => setMode(b.dataset.mode)),
         );
