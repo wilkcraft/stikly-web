@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -415,7 +415,7 @@
 
       .feature-board {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
         gap: 34px 24px;
         max-width: 980px;
         margin: 0 auto;
@@ -434,6 +434,13 @@
       .feature-board .note-card:nth-child(4) {
         transform: rotate(2.2deg);
         margin-top: 10px;
+      }
+      .feature-board .note-card:nth-child(5) {
+        transform: rotate(1.2deg);
+      }
+      .feature-board .note-card:nth-child(6) {
+        transform: rotate(-1.8deg);
+        margin-top: 12px;
       }
       .feature-board .note-card:hover {
         transform: none;
@@ -579,7 +586,6 @@
           z-index 0s;
       }
 
-      /* On desktop: green above-left and blue above-right of the yellow note */
       .zorder-visual.desktop .demo-mini-note {
         top: 76px;
         z-index: 1;
@@ -595,7 +601,6 @@
         z-index: 2;
       }
 
-      /* Normal: green behind, blue partly covering the yellow note */
       .zorder-visual.normal .demo-mini-note {
         top: 56px;
         z-index: 2;
@@ -611,7 +616,6 @@
         z-index: 3;
       }
 
-      /* Always on top: yellow note above both windows */
       .zorder-visual.top .demo-mini-note {
         top: 20px;
         z-index: 3;
@@ -690,7 +694,8 @@
         margin: 34px 0 10px;
       }
       .live-note {
-        width: min(340px, 90vw);
+        position: relative;
+        width: min(360px, 92vw);
         border-radius: 6px;
         box-shadow: var(--shadow-note);
         overflow: hidden;
@@ -718,6 +723,7 @@
         color: var(--ink);
         outline: none;
         font-size: 0.95rem;
+        line-height: 1.5;
       }
       .live-note .content:empty::before {
         content: attr(data-placeholder);
@@ -735,6 +741,10 @@
         border-top: 1px solid rgba(0, 0, 0, 0.08);
         flex-wrap: nowrap;
         overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .live-note .toolbar::-webkit-scrollbar {
+        display: none;
       }
       .live-note .toolbar button {
         width: 30px;
@@ -781,15 +791,15 @@
       .live-note .live-color-reset-menu {
         display: none;
         position: absolute;
-        bottom: 38px;
-        left: 40px;
+        bottom: 40px;
+        left: 0;
         padding: 4px;
         background: rgba(255, 255, 255, 0.96);
         border: 1px solid rgba(0, 0, 0, 0.12);
         border-radius: 7px;
         box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
         z-index: 1000;
-        min-width: 150px;
+        min-width: 140px;
         color: #222;
       }
       .live-note .live-color-reset-menu.visible {
@@ -965,7 +975,7 @@
       .tray-icon {
         width: 46px;
         height: 46px;
-        background-image: url("data:image/png;base64,__ICON_B64__");
+        background-image: url("icon.png");
         background-size: contain;
         background-repeat: no-repeat;
         margin: 0 auto 8px;
@@ -1025,6 +1035,350 @@
         clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: 0;
+      }
+
+      .lib-window {
+        --l-bg: #24312c;
+        --l-line: rgba(246, 241, 228, 0.05);
+        --l-text: #f4efe0;
+        --l-dim: #cdc6b2;
+        --l-muted: #93a19a;
+        --l-paper: #f4efe0;
+        --l-field: rgba(255, 255, 255, 0.07);
+        --l-field-b: rgba(255, 255, 255, 0.16);
+        --l-top: #1b2521;
+        --l-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+        max-width: 980px;
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--l-text);
+        transition: background 0.25s ease;
+      }
+      .lib-window[data-theme="light"] {
+        --l-bg: #efe8d6;
+        --l-line: rgba(44, 42, 34, 0.09);
+        --l-text: #2c2a22;
+        --l-dim: #5b5648;
+        --l-muted: #7a7568;
+        --l-paper: #fffdf6;
+        --l-field: rgba(255, 255, 255, 0.65);
+        --l-field-b: rgba(0, 0, 0, 0.16);
+        --l-top: #e3dcc7;
+        --l-shadow: 0 8px 18px rgba(60, 50, 20, 0.28);
+      }
+      .lib-titlebar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px 12px;
+        font-size: 0.78rem;
+        background: var(--l-top);
+        color: var(--l-dim);
+      }
+      .lib-wbtns i {
+        display: inline-block;
+        width: 28px;
+        text-align: center;
+        font-style: normal;
+      }
+      .lib-body {
+        background-color: var(--l-bg);
+        background-image: radial-gradient(
+          circle at 1px 1px,
+          var(--l-line) 1px,
+          transparent 1.6px
+        );
+        background-size: 26px 26px;
+        padding: 0 24px 22px;
+      }
+      .lib-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+      }
+      .lib-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-hand);
+        font-weight: 700;
+        font-size: 1.3rem;
+      }
+      .lib-brand img {
+        width: 28px;
+        height: 28px;
+      }
+      .lib-theme {
+        display: inline-flex;
+        gap: 2px;
+        padding: 3px;
+        background: var(--l-field);
+        border: 1px solid var(--l-field-b);
+        border-radius: 999px;
+      }
+      .lib-theme button {
+        border: 0;
+        background: transparent;
+        color: var(--l-dim);
+        font: 600 0.78rem var(--font-body);
+        padding: 5px 12px;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .lib-theme button[aria-pressed="true"] {
+        background: var(--yellow);
+        color: var(--ink);
+      }
+      .lib-hero {
+        text-align: center;
+        padding: 8px 0 4px;
+      }
+      .lib-eyebrow {
+        font-family: var(--font-hand);
+        color: var(--l-dim);
+        transform: rotate(-1deg);
+        display: inline-block;
+      }
+      .lib-title {
+        font-family: var(--font-hand);
+        font-weight: 700;
+        font-size: clamp(2.2rem, 6vw, 3.4rem);
+        line-height: 1.1;
+        transform: rotate(-1.5deg);
+      }
+      .lib-count {
+        color: var(--l-dim);
+        font-size: 0.9rem;
+        margin-top: 4px;
+      }
+      .lib-actions {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      .lib-pbtn {
+        font-family: var(--font-hand);
+        font-weight: 700;
+        color: var(--ink);
+        background: var(--l-paper);
+        padding: 8px 18px;
+        border-radius: 4px 4px 10px 10px;
+        box-shadow: var(--l-shadow);
+      }
+      .lib-pbtn.y {
+        background: var(--yellow);
+      }
+      .lib-search {
+        display: block;
+        width: min(380px, 100%);
+        margin: 18px auto 0;
+        padding: 8px 16px;
+        font: 0.9rem var(--font-body);
+        color: var(--l-text);
+        background: var(--l-field);
+        border: 1px solid var(--l-field-b);
+        border-radius: 999px;
+      }
+      .lib-search::placeholder {
+        color: var(--l-muted);
+      }
+
+      .lib-board {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 38px 24px;
+        padding: 34px 0 14px;
+      }
+      .lib-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 170px;
+        padding: 28px 18px 12px;
+        background: var(--c, var(--yellow));
+        color: var(--ink);
+        border-radius: 4px 4px 10px 10px;
+        box-shadow: var(--l-shadow);
+        cursor: pointer;
+        transition: transform 0.15s ease;
+      }
+      .lib-card.dark-note {
+        color: #f6f1e4;
+      }
+      .lib-card:nth-child(4n + 1) {
+        transform: rotate(-1.8deg);
+      }
+      .lib-card:nth-child(4n + 2) {
+        transform: rotate(1.4deg);
+        margin-top: 10px;
+      }
+      .lib-card:nth-child(4n + 3) {
+        transform: rotate(-0.9deg);
+      }
+      .lib-card:nth-child(4n + 4) {
+        transform: rotate(2deg);
+        margin-top: 8px;
+      }
+      .lib-card:hover {
+        transform: translateY(-4px) rotate(0deg);
+      }
+      .lib-card h4 {
+        margin: 0 0 6px;
+        font-family: var(--font-hand);
+        font-size: 1.2rem;
+        line-height: 1.2;
+      }
+      .lib-open {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        font-size: 0.66rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.12);
+      }
+      .lib-prev {
+        font-size: 0.88rem;
+        line-height: 1.4;
+      }
+      .lib-prev ul,
+      .lib-prev ol {
+        margin: 2px 0;
+        padding-left: 20px;
+      }
+      .lib-prev li {
+        margin: 1px 0;
+      }
+      .lib-prev ul.checklist {
+        list-style: none;
+        padding-left: 0;
+      }
+      .lib-prev ul.checklist > li {
+        position: relative;
+        padding-left: 22px;
+        min-height: 1.3em;
+      }
+      .lib-prev ul.checklist > li::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 0.22em;
+        width: 12px;
+        height: 12px;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.55);
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .lib-prev ul.checklist > li[data-checked="true"]::before {
+        content: "\2713";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        line-height: 1;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.65);
+        border-color: rgba(0, 0, 0, 0.65);
+      }
+      .lib-prev ul.checklist > li[data-checked="true"] {
+        text-decoration: line-through;
+        opacity: 0.55;
+      }
+      .dark-note .lib-prev ul.checklist > li::before {
+        border-color: rgba(255, 255, 255, 0.7);
+      }
+      .dark-note .lib-prev ul.checklist > li[data-checked="true"]::before {
+        color: #222;
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+      .lib-foot {
+        margin-top: auto;
+        padding-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        opacity: 0.8;
+      }
+      .lib-del {
+        padding: 2px 7px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.09);
+      }
+      .dark-note .lib-del,
+      .dark-note .lib-open {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .lib-empty {
+        display: none;
+        text-align: center;
+        font-family: var(--font-hand);
+        font-size: 1.2rem;
+        color: var(--l-dim);
+        margin: 0 auto;
+        padding: 20px 0;
+      }
+      .lib-empty.visible {
+        display: block;
+      }
+      .lib-hint {
+        text-align: center;
+        margin: 0 auto;
+        color: var(--l-muted);
+        font-size: 0.78rem;
+        font-style: italic;
+      }
+
+      .live-note .toolbar button {
+        width: 26px;
+      }
+      .live-note .content ul.checklist {
+        list-style: none;
+        padding-left: 0;
+      }
+      .live-note .content ul.checklist > li {
+        position: relative;
+        padding-left: 26px;
+        min-height: 1.4em;
+      }
+      .live-note .content ul.checklist > li::before {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 0.2em;
+        width: 14px;
+        height: 14px;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.55);
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      ::highlight(kept-selection) {
+        background-color: rgba(0, 120, 215, 0.35);
+      }
+      .live-note .content ul.checklist > li[data-checked="true"]::before {
+        content: "\2713";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        line-height: 1;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.65);
+        border-color: rgba(0, 0, 0, 0.65);
+      }
+      .live-note .content ul.checklist > li[data-checked="true"] {
+        text-decoration: line-through;
+        opacity: 0.55;
       }
 
       .wilkcraft-link {
@@ -1087,6 +1441,7 @@
           <a href="#download">Download</a>
           <a href="#what-is-it">What is it?</a>
           <a href="#features">Features</a>
+          <a href="#library">My notes</a>
           <a href="#layers">Layers</a>
           <a href="#colors">Colors</a>
           <a href="#inside">Inside</a>
@@ -1133,22 +1488,22 @@
       </div>
       <div class="download-buttons">
         <a
-          href="Stikly%20Setup%201.0.5.exe"
+          href="Stikly%20Setup%201.2.5.exe"
           class="download-btn primary"
           download
         >
           <span class="dl-title">Installer</span>
-          <span class="dl-sub">Stikly Setup 1.0.5.exe</span>
+          <span class="dl-sub">Stikly Setup 1.2.5.exe</span>
         </a>
-        <a href="Stikly%201.0.5.exe" class="download-btn secondary" download>
+        <a href="Stikly%201.2.5.exe" class="download-btn secondary" download>
           <span class="dl-title">Portable</span>
-          <span class="dl-sub">Stikly 1.0.5.exe — no install needed</span>
+          <span class="dl-sub">Stikly 1.2.5.exe — no install needed</span>
         </a>
       </div>
     </section>
 
     <main>
-      <section id="#what-is-it">
+      <section id="what-is-it">
         <div class="section-head">
           <h2>What is Stikly?</h2>
         </div>
@@ -1161,9 +1516,9 @@
             wherever you want.
           </p>
           <p>
-            Everything is saved on your own computer. Close Stikly, reopen it,
-            and every note appears exactly where you left it, with its text,
-            color, and size intact.
+            Everything is saved on your own computer. Every note is its own
+            small file, and a built-in panel lets you browse, search and reopen
+            all of them whenever you want.
           </p>
         </div>
       </section>
@@ -1180,17 +1535,19 @@
           <div class="note-card yellow">
             <h3>Formatted text</h3>
             <p>
-              Bold, italics, underline, and strikethrough options are available
-              directly within the note. The <strong>A</strong> button changes
-              the selected text to a different color, while the right-click menu
-              reverts it to the original black.
+              Bold, italics, underline and strikethrough are right inside the
+              note. The <strong>A</strong> button changes the color of the
+              selected text and the <strong>marker</strong> button highlights
+              it, just like a real highlighter. Right-click either one to remove
+              the color. Your selection stays put while you try different
+              colors.
             </p>
           </div>
           <div class="note-card pink">
-            <h3>Lists</h3>
+            <h3>Lists &amp; checklists</h3>
             <p>
-              Convert any paragraph into a bulleted or numbered list, to jot
-              down tasks without leaving the note.
+              Bulleted and numbered lists, plus checklists: click a box and the
+              whole line is crossed out. Click again to undo it.
             </p>
           </div>
           <div class="note-card green">
@@ -1207,6 +1564,23 @@
               The <strong>+</strong> button creates a new note slightly offset
               from the previous one, so they never stack directly on top of each
               other.
+            </p>
+          </div>
+          <div class="note-card cream">
+            <h3>All your notes in one panel</h3>
+            <p>
+              When Stikly starts, or when you press <strong>Ctrl+O</strong>, a
+              panel shows every saved note as a real sticky note, with its
+              colors, lists and highlights. Search, open, import or delete from
+              there.
+            </p>
+          </div>
+          <div class="note-card yellow">
+            <h3>Auto-save on exit</h3>
+            <p>
+              Use <strong>Close all notes</strong> from the tray icon (or just
+              quit Stikly) and every note with text is saved automatically,
+              named after its first line.
             </p>
           </div>
         </div>
@@ -1441,16 +1815,33 @@
                 value="#000000"
                 style="display: none"
               />
-              <div class="live-color-reset-menu" id="liveColorResetMenu">
-                <button
-                  type="button"
-                  id="liveResetColorBtn"
-                  class="live-menu-item"
+              <button
+                type="button"
+                id="liveHighlightBtn"
+                title="Highlight color"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="15"
+                  height="15"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  <span>⟲</span>
-                  Reset color
-                </button>
-              </div>
+                  <path d="m9 11-6 6v3h9l3-3" />
+                  <path
+                    d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"
+                  />
+                </svg>
+              </button>
+              <input
+                type="color"
+                id="liveHighlightPicker"
+                value="#ffeb3b"
+                style="display: none"
+              />
               <button
                 type="button"
                 data-cmd="insertUnorderedList"
@@ -1467,9 +1858,258 @@
                 <span class="number-icon">1.</span
                 ><span class="list-lines">☰</span>
               </button>
+              <button type="button" id="liveChecklistBtn" title="Checklist">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="15"
+                  height="15"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="3" />
+                  <path d="m8 12 3 3 5-6" />
+                </svg>
+              </button>
+            </div>
+            <div class="live-color-reset-menu" id="liveColorResetMenu">
+              <button
+                type="button"
+                id="liveResetColorBtn"
+                class="live-menu-item"
+              >
+                <span>⟲</span>
+                Reset color
+              </button>
+            </div>
+            <div class="live-color-reset-menu" id="liveHighlightResetMenu">
+              <button
+                type="button"
+                id="liveResetHighlightBtn"
+                class="live-menu-item"
+              >
+                <span>⟲</span>
+                Remove highlight
+              </button>
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="library">
+        <div class="section-head">
+          <h2>Your notes, all in one place</h2>
+          <p>
+            Stikly now opens with a panel that shows every note you've saved,
+            with its real formatting. Try the search box and the theme switch.
+          </p>
+        </div>
+
+        <div class="lib-window" id="libWindow" data-theme="dark">
+          <div class="lib-titlebar">
+            <span>Stikly – My notes</span>
+            <span class="lib-wbtns" aria-hidden="true"
+              ><i>–</i><i>□</i><i>×</i></span
+            >
+          </div>
+
+          <div class="lib-body">
+            <div class="lib-topbar">
+              <div class="lib-brand"><img src="icon.png" alt="" /> Stikly</div>
+              <div class="lib-theme" role="group" aria-label="Theme">
+                <button
+                  type="button"
+                  data-pref="system"
+                  aria-pressed="true"
+                  title="Auto (follows Windows)"
+                >
+                  Auto
+                </button>
+                <button
+                  type="button"
+                  data-pref="light"
+                  aria-pressed="false"
+                  title="Light"
+                >
+                  ☀
+                </button>
+                <button
+                  type="button"
+                  data-pref="dark"
+                  aria-pressed="false"
+                  title="Dark"
+                >
+                  ☾
+                </button>
+              </div>
+            </div>
+
+            <div class="lib-hero">
+              <div class="lib-eyebrow">Your notice board</div>
+              <div class="lib-title">My notes</div>
+              <div class="lib-count" id="libCount">6 saved notes</div>
+              <div class="lib-actions">
+                <span class="lib-pbtn y">+ New note</span>
+                <span class="lib-pbtn">Import…</span>
+                <span class="lib-pbtn">Open folder</span>
+              </div>
+              <input
+                type="search"
+                id="libSearch"
+                class="lib-search"
+                placeholder="Search your notes…"
+                spellcheck="false"
+              />
+            </div>
+
+            <div class="lib-board" id="libBoard">
+              <article class="lib-card" style="--c: #fff59d">
+                <div class="pin red"></div>
+                <span class="lib-open">Open</span>
+                <h4>Shopping list</h4>
+                <div class="lib-prev">
+                  <ul class="checklist">
+                    <li data-checked="true">Oat milk</li>
+                    <li data-checked="true">Coffee beans</li>
+                    <li>Bread</li>
+                    <li>
+                      <span style="color: #c62828">Birthday candles!</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 27, 2026, 10:30 AM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+
+              <article class="lib-card" style="--c: #bbdefb">
+                <div class="pin red"></div>
+                <h4>Team meeting</h4>
+                <div class="lib-prev">
+                  <b>Friday 10:00</b>
+                  <ul>
+                    <li>
+                      Review the
+                      <span
+                        style="background-color: #ffeb3b; border-radius: 2px"
+                        >release checklist</span
+                      >
+                    </li>
+                    <li>Plan next sprint</li>
+                    <li><u>Send the notes</u> to everyone</li>
+                  </ul>
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 26, 2026, 06:12 PM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+
+              <article class="lib-card" style="--c: #c8e6c9">
+                <div class="pin red"></div>
+                <h4>Pancakes</h4>
+                <div class="lib-prev">
+                  <ol>
+                    <li>Mix flour, milk and eggs</li>
+                    <li>Rest the batter <i>10 min</i></li>
+                    <li>Cook on medium heat</li>
+                  </ol>
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 24, 2026, 09:05 AM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+
+              <article class="lib-card" style="--c: #f8bbd0">
+                <div class="pin red"></div>
+                <h4>Ideas</h4>
+                <div class="lib-prev">
+                  <div><b>Bold</b>, <i>italic</i>, <s>strikethrough</s></div>
+                  <div>
+                    <span style="color: #1565c0">Blue text</span> and
+                    <span
+                      style="
+                        color: #2e7d32;
+                        background-color: #fff59d;
+                        border-radius: 2px;
+                      "
+                      >green on yellow</span
+                    >
+                  </div>
+                  <div>Learn <u>guitar</u> this winter</div>
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 22, 2026, 08:40 PM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+
+              <article class="lib-card dark-note" style="--c: #4a3f7a">
+                <div class="pin red"></div>
+                <h4>Night owl</h4>
+                <div class="lib-prev">
+                  <ul class="checklist">
+                    <li data-checked="true">Finish the design</li>
+                    <li>Write the changelog</li>
+                    <li>
+                      <span
+                        style="
+                          background-color: #ffd54f;
+                          color: #2c2a22;
+                          border-radius: 2px;
+                        "
+                        >Ship it</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 20, 2026, 11:58 PM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+
+              <article class="lib-card" style="--c: #fff59d">
+                <div class="pin red"></div>
+                <h4>Passwords reminder</h4>
+                <div class="lib-prev">
+                  Change the router password and
+                  <b>back up the photos folder</b> before the weekend.
+                </div>
+                <div class="lib-foot">
+                  <span>Oct 18, 2026, 02:20 PM</span
+                  ><span class="lib-del">🗑</span>
+                </div>
+              </article>
+            </div>
+
+            <p class="lib-empty" id="libEmpty">No notes match your search.</p>
+            <p class="lib-hint">
+              Click a note to open it · Shift + click to open it without closing
+              this panel
+            </p>
+          </div>
+        </div>
+
+        <p class="strip" style="margin-top: 26px">
+          Open it any time from the <strong>▾</strong> next to the + button,
+          with <strong>Ctrl+O</strong>, or from <strong>My notes</strong> in the
+          tray menu. Notes you had saved in older versions are detected and
+          moved to the new
+          <code
+            style="
+              background: rgba(255, 255, 255, 0.08);
+              padding: 1px 5px;
+              border-radius: 3px;
+            "
+            >notes</code
+          >
+          folder automatically.
+        </p>
       </section>
 
       <section id="inside">
@@ -1536,17 +2176,20 @@
               <h3>main.js — the brain</h3>
               <p>
                 The main process of Electron. Creates the window for each note,
-                saves its position, size, text and color in
-                <code>notes.json</code>, and controls the system tray icon.
+                saves every note as its own <code>.json</code> file in a
+                <code>notes</code>
+                folder, opens the notes panel, and controls the system tray
+                icon.
               </p>
             </div>
             <div class="index-card">
               <div class="pin red"></div>
               <h3>preload.js — the bridge</h3>
               <p>
-                Exposes only three safe functions to the note —create, delete,
-                update— through <code>contextBridge</code>, without giving it
-                direct access to Node.js.
+                Exposes only a few safe functions to the note —create, delete,
+                update, save, open— through <code>contextBridge</code>, without
+                giving it direct access to Node.js. The notes panel has its own
+                bridge too.
               </p>
             </div>
             <div class="index-card">
@@ -1555,6 +2198,15 @@
               <p>
                 The interface where you write: the text area, the format bar and
                 the color and position menus.
+              </p>
+            </div>
+            <div class="index-card">
+              <div class="pin red"></div>
+              <h3>library.html / .js / .css — the panel</h3>
+              <p>
+                The window that lists your saved notes. It rebuilds each note's
+                formatting from its saved HTML through a strict sanitizer, so
+                previews look real but can never run code.
               </p>
             </div>
             <div class="index-card">
@@ -1573,21 +2225,29 @@
         <div class="strip">
           <span class="tag">your desktop, your data</span>
           <p>
-            All content is saved in a
+            Every note is saved as its own
             <code
               style="
                 background: rgba(255, 255, 255, 0.08);
                 padding: 1px 5px;
                 border-radius: 3px;
               "
-              >notes.json</code
+              >.json</code
             >
-            file within the application's data folder on your own computer.
-            Notes are only written to that file when you exit the app or close
-            everything from the tray icon's "Close all notes" option. Closing an
-            individual note with its own <strong>×</strong> button does not save
-            it. Stikly does not send anything to any server; if you want to back
-            up your data, that file is all you need to save.
+            file inside a <strong>notes</strong> folder in the application's
+            data folder on your own computer (<code
+              style="
+                background: rgba(255, 255, 255, 0.08);
+                padding: 1px 5px;
+                border-radius: 3px;
+              "
+              >%APPDATA%\stikly\notes</code
+            >). Notes are written when you press Save, when you close one that
+            was already saved, and when you quit Stikly or choose "Close all
+            notes" — in that case every note with text is saved automatically,
+            named after its first line. Closing a never-saved note with its own
+            <strong>×</strong> button discards it. Stikly does not send anything
+            to any server; to back up your data, just copy that folder.
           </p>
         </div>
       </section>
@@ -1607,6 +2267,7 @@
           </div>
           <div class="context-menu">
             <div class="item">New note</div>
+            <div class="item">My notes</div>
             <div class="sep"></div>
             <div class="item">Close all notes</div>
           </div>
@@ -1725,28 +2386,235 @@
         const note = document.getElementById("liveNote");
         const content = document.getElementById("liveContent");
         if (!note || !content) return;
-        note.querySelectorAll(".toolbar button[data-cmd]").forEach((btn) => {
+
+        let savedRange = null;
+
+        document.addEventListener("selectionchange", () => {
+          const sel = window.getSelection();
+          if (
+            sel.rangeCount &&
+            content.contains(sel.anchorNode) &&
+            content.contains(sel.focusNode)
+          ) {
+            savedRange = sel.getRangeAt(0).cloneRange();
+          }
+        });
+
+        function showKept() {
+          if (
+            !window.CSS ||
+            !CSS.highlights ||
+            typeof Highlight === "undefined"
+          )
+            return;
+          if (savedRange && !savedRange.collapsed && !document.hasFocus()) {
+            CSS.highlights.set(
+              "kept-selection",
+              new Highlight(savedRange.cloneRange()),
+            );
+          } else {
+            CSS.highlights.delete("kept-selection");
+          }
+        }
+        window.addEventListener("blur", showKept);
+        window.addEventListener("focus", () => {
+          if (window.CSS && CSS.highlights)
+            CSS.highlights.delete("kept-selection");
+        });
+
+        function selectAll() {
+          const r = document.createRange();
+          r.selectNodeContents(content);
+          savedRange = r;
+        }
+
+        function applyToSaved(cmd, value) {
+          content.focus();
+          const sel = window.getSelection();
+          if (savedRange) {
+            sel.removeAllRanges();
+            sel.addRange(savedRange.cloneRange());
+          }
+          try {
+            document.execCommand("styleWithCSS", false, true);
+          } catch (e) {}
+          document.execCommand(cmd, false, value);
+          if (sel.rangeCount && content.contains(sel.anchorNode)) {
+            savedRange = sel.getRangeAt(0).cloneRange();
+          }
+          showKept();
+          updateToolbarState();
+        }
+
+        function currentList() {
+          const s = window.getSelection();
+          if (!s.rangeCount || !content.contains(s.anchorNode)) return null;
+          const n =
+            s.anchorNode.nodeType === 1
+              ? s.anchorNode
+              : s.anchorNode.parentElement;
+          const l = n ? n.closest("ul, ol") : null;
+          return l && content.contains(l) ? l : null;
+        }
+        const isChecklist = (l) =>
+          !!l && l.tagName === "UL" && l.classList.contains("checklist");
+
+        const cmdButtons = note.querySelectorAll(".toolbar button[data-cmd]");
+        const ckBtn = document.getElementById("liveChecklistBtn");
+
+        function updateToolbarState() {
+          const inCheck = isChecklist(currentList());
+          cmdButtons.forEach((btn) => {
+            let active = false;
+            try {
+              active = document.queryCommandState(btn.dataset.cmd);
+            } catch (e) {}
+            if (btn.dataset.cmd === "insertUnorderedList" && inCheck)
+              active = false;
+            btn.classList.toggle("active", active);
+          });
+          if (ckBtn) ckBtn.classList.toggle("active", inCheck);
+        }
+
+        cmdButtons.forEach((btn) => {
           btn.addEventListener("mousedown", (e) => e.preventDefault());
           btn.addEventListener("click", () => {
             content.focus();
-            document.execCommand(btn.dataset.cmd, false, null);
+            const cmd = btn.dataset.cmd;
+            if (cmd === "insertUnorderedList" && isChecklist(currentList())) {
+              currentList().classList.remove("checklist");
+            } else {
+              document.execCommand(cmd, false, null);
+            }
+            updateToolbarState();
           });
         });
-        const menuBtn = document.getElementById("liveMenuBtn");
-        const menu = document.getElementById("liveMenu");
-        if (menuBtn && menu) {
-          menuBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const isVisible = menu.classList.toggle("visible");
-            menuBtn.setAttribute("aria-expanded", String(isVisible));
+        content.addEventListener("keyup", updateToolbarState);
+        content.addEventListener("mouseup", updateToolbarState);
+
+        function markSelectedAsChecklist() {
+          const sel = window.getSelection();
+          content.querySelectorAll("ul").forEach((ul) => {
+            if (sel.rangeCount && sel.containsNode(ul, true))
+              ul.classList.add("checklist");
           });
-          document.addEventListener("click", (e) => {
-            if (!menu.contains(e.target) && e.target !== menuBtn) {
-              menu.classList.remove("visible");
-              menuBtn.setAttribute("aria-expanded", "false");
+          const l = currentList();
+          if (l && l.tagName === "UL") l.classList.add("checklist");
+        }
+
+        if (ckBtn) {
+          ckBtn.addEventListener("mousedown", (e) => e.preventDefault());
+          ckBtn.addEventListener("click", () => {
+            content.focus();
+            const l = currentList();
+            if (isChecklist(l)) {
+              document.execCommand("insertUnorderedList");
+            } else if (l && l.tagName === "UL") {
+              l.classList.add("checklist");
+            } else {
+              document.execCommand("insertUnorderedList");
+              markSelectedAsChecklist();
             }
+            updateToolbarState();
           });
         }
+
+        content.addEventListener("mousedown", (e) => {
+          if (e.button !== 0 || !e.target.closest) return;
+          const li = e.target.closest("ul.checklist > li");
+          if (!li || !content.contains(li)) return;
+          const r = li.getBoundingClientRect();
+          if (e.clientX - r.left <= 26 && e.clientY - r.top <= 24) {
+            e.preventDefault();
+            if (li.dataset.checked === "true") delete li.dataset.checked;
+            else li.dataset.checked = "true";
+          }
+        });
+
+        content.addEventListener("input", (e) => {
+          if (e.inputType !== "insertParagraph") return;
+          const s = window.getSelection();
+          if (!s.anchorNode) return;
+          const n =
+            s.anchorNode.nodeType === 1
+              ? s.anchorNode
+              : s.anchorNode.parentElement;
+          const li = n && n.closest("ul.checklist > li");
+          if (li && !li.textContent.trim()) delete li.dataset.checked;
+        });
+
+        const textMenu = document.getElementById("liveColorResetMenu");
+        const hlMenu = document.getElementById("liveHighlightResetMenu");
+
+        function hideMenus() {
+          textMenu.classList.remove("visible");
+          hlMenu.classList.remove("visible");
+        }
+        function showMenuAbove(menuEl, btn) {
+          hideMenus();
+          menuEl.classList.add("visible");
+          const nr = note.getBoundingClientRect();
+          const br = btn.getBoundingClientRect();
+          let left = br.left - nr.left + br.width / 2 - menuEl.offsetWidth / 2;
+          left = Math.max(4, Math.min(left, nr.width - menuEl.offsetWidth - 4));
+          menuEl.style.left = left + "px";
+        }
+
+        const textBtn = document.getElementById("liveTextColorBtn");
+        const textPicker = document.getElementById("liveTextColorPicker");
+        textBtn.addEventListener("mousedown", (e) => e.preventDefault());
+        textBtn.addEventListener("click", () => {
+          hideMenus();
+          textPicker.click();
+        });
+        textBtn.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          showMenuAbove(textMenu, textBtn);
+        });
+        textPicker.addEventListener("input", (e) => {
+          applyToSaved("foreColor", e.target.value);
+          textBtn.style.borderBottom = "3px solid " + e.target.value;
+        });
+        document
+          .getElementById("liveResetColorBtn")
+          .addEventListener("click", () => {
+            if (!savedRange) selectAll();
+            applyToSaved("foreColor", "#2c2a22");
+            textBtn.style.borderBottom = "";
+            hideMenus();
+          });
+
+        const hlBtn = document.getElementById("liveHighlightBtn");
+        const hlPicker = document.getElementById("liveHighlightPicker");
+        hlBtn.addEventListener("mousedown", (e) => e.preventDefault());
+        hlBtn.addEventListener("click", () => {
+          hideMenus();
+          hlPicker.click();
+        });
+        hlBtn.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          showMenuAbove(hlMenu, hlBtn);
+        });
+        hlPicker.addEventListener("input", (e) => {
+          applyToSaved("hiliteColor", e.target.value);
+          hlBtn.style.borderBottom = "3px solid " + e.target.value;
+        });
+        document
+          .getElementById("liveResetHighlightBtn")
+          .addEventListener("click", () => {
+            if (!savedRange) selectAll();
+            applyToSaved("hiliteColor", "transparent");
+            hlBtn.style.borderBottom = "";
+            hideMenus();
+          });
+
+        const menuBtn = document.getElementById("liveMenuBtn");
+        const menu = document.getElementById("liveMenu");
+        menuBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const v = menu.classList.toggle("visible");
+          menuBtn.setAttribute("aria-expanded", String(v));
+        });
         note
           .querySelectorAll(".live-color-options .c[data-color]")
           .forEach((btn) => {
@@ -1757,86 +2625,60 @@
           });
         const gearBtn = document.getElementById("liveGearBtn");
         const colorPicker = document.getElementById("liveColorPicker");
-        if (gearBtn && colorPicker) {
-          gearBtn.addEventListener("click", () => colorPicker.click());
-          colorPicker.addEventListener("input", (e) => {
-            note.style.background = e.target.value;
-          });
-        }
-        function updateLiveToolbarState() {
-          note.querySelectorAll(".toolbar button[data-cmd]").forEach((btn) => {
-            let active = false;
-            try {
-              active = document.queryCommandState(btn.dataset.cmd);
-            } catch (e) {
-              active = false;
-            }
-            btn.classList.toggle("active", active);
-          });
-        }
-        content.addEventListener("keyup", updateLiveToolbarState);
-        content.addEventListener("mouseup", updateLiveToolbarState);
+        gearBtn.addEventListener("click", () => colorPicker.click());
+        colorPicker.addEventListener("input", (e) => {
+          note.style.background = e.target.value;
+        });
 
-        const textColorBtn = document.getElementById("liveTextColorBtn");
-        const textColorPicker = document.getElementById("liveTextColorPicker");
-        const colorResetMenu = document.getElementById("liveColorResetMenu");
-        const resetColorBtn = document.getElementById("liveResetColorBtn");
-        let savedRange = null;
-        if (textColorBtn && textColorPicker) {
-          textColorBtn.addEventListener("mousedown", (e) => {
-            e.preventDefault();
-            const selection = window.getSelection();
-            if (
-              selection.rangeCount > 0 &&
-              content.contains(selection.anchorNode)
-            ) {
-              savedRange = selection.getRangeAt(0).cloneRange();
-            }
-          });
-          textColorBtn.addEventListener("click", () => textColorPicker.click());
-          textColorBtn.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            colorResetMenu.classList.add("visible");
-          });
-          textColorPicker.addEventListener("input", (e) => {
-            const color = e.target.value;
-            content.focus();
-            const selection = window.getSelection();
-            if (savedRange) {
-              selection.removeAllRanges();
-              selection.addRange(savedRange);
-            }
-            document.execCommand("foreColor", false, color);
-            textColorBtn.style.borderBottom = `3px solid ${color}`;
-            updateLiveToolbarState();
-          });
-        }
-        if (resetColorBtn) {
-          resetColorBtn.addEventListener("click", () => {
-            content.focus();
-            const selection = window.getSelection();
-            if (savedRange) {
-              selection.removeAllRanges();
-              selection.addRange(savedRange);
-            } else {
-              const range = document.createRange();
-              range.selectNodeContents(content);
-              selection.removeAllRanges();
-              selection.addRange(range);
-            }
-            document.execCommand("foreColor", false, "#000000");
-            textColorBtn.style.borderBottom = "";
-            colorResetMenu.classList.remove("visible");
-          });
-        }
         document.addEventListener("click", (e) => {
-          if (
-            colorResetMenu &&
-            !colorResetMenu.contains(e.target) &&
-            e.target !== textColorBtn
-          ) {
-            colorResetMenu.classList.remove("visible");
+          if (!menu.contains(e.target) && e.target !== menuBtn) {
+            menu.classList.remove("visible");
+            menuBtn.setAttribute("aria-expanded", "false");
           }
+          if (!textMenu.contains(e.target) && !hlMenu.contains(e.target))
+            hideMenus();
+        });
+      })();
+
+      (function () {
+        const win = document.getElementById("libWindow");
+        if (!win) return;
+        const search = document.getElementById("libSearch");
+        const cards = [...document.querySelectorAll("#libBoard .lib-card")];
+        const count = document.getElementById("libCount");
+        const empty = document.getElementById("libEmpty");
+        const buttons = win.querySelectorAll("[data-pref]");
+        const media = window.matchMedia("(prefers-color-scheme: light)");
+
+        function applyPref(pref) {
+          const theme =
+            pref === "system" ? (media.matches ? "light" : "dark") : pref;
+          win.dataset.theme = theme;
+          buttons.forEach((b) =>
+            b.setAttribute("aria-pressed", String(b.dataset.pref === pref)),
+          );
+          win.dataset.pref = pref;
+        }
+        buttons.forEach((b) =>
+          b.addEventListener("click", () => applyPref(b.dataset.pref)),
+        );
+        media.addEventListener("change", () => {
+          if (win.dataset.pref === "system") applyPref("system");
+        });
+        applyPref("system");
+
+        search.addEventListener("input", () => {
+          const q = search.value.trim().toLowerCase();
+          let shown = 0;
+          cards.forEach((c) => {
+            const match = !q || c.textContent.toLowerCase().includes(q);
+            c.style.display = match ? "" : "none";
+            if (match) shown++;
+          });
+          count.textContent = q
+            ? shown + " of " + cards.length + " notes"
+            : cards.length + " saved notes";
+          empty.classList.toggle("visible", shown === 0);
         });
       })();
     </script>
